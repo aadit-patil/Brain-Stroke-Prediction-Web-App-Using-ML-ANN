@@ -86,6 +86,10 @@ def strokeCheck():
 def signupCheck():
     print("Hello New User")
 
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
 @app.route('/logout')
 def logout():
     session.pop('loggedin', None)
@@ -127,12 +131,24 @@ def result():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('insert into preds values(% s,% s)', (username,pred))
     mysql.connection.commit()
+   
 
     # for No Stroke Risk
     if Y_pred==0:
         return render_template('nostroke.html')
     else:
         return render_template('stroke.html')
+
+@app.route("/pastResult")
+def pastResult():
+    print("showing past result")
+    username=session['username']
+    username=str(username)
+    cursor2 = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor2.execute('SELECT * FROM preds WHERE uname = % s', [username])
+    data = cursor2.fetchall()
+    print(data)
+    return render_template('ppreds.html',data=data,uname=username)
 
 if __name__=="__main__":
     app.run(debug=True,port=7384)

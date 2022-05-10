@@ -18,19 +18,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Past Prediction</a>
+                <a class="nav-link" href="/pastResult">Past Prediction</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Detailed Analysis</a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -49,7 +49,11 @@
                                 <label for="gender">gender</label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="gender" name="gender" placeholder="gender">
+                                <select name="gender" id="gender" class="form-control" >
+                                  <option value="1">Male</option>
+                                  <option value="0">Female</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="gender" name="gender" placeholder="1 for Male, 0 for Female">-->
                             </div>
                         </div>
                         <br>
@@ -69,7 +73,11 @@
                                 <label for="hypertension">hypertension  </label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="hypertension" name="hypertension" placeholder="1 for Yes, 0 for No">
+                                <select name="hypertension" id="hypertension" class="form-control" >
+                                  <option value="1">Yes</option>
+                                  <option value="0">No</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="hypertension" name="hypertension" placeholder="1 for Yes, 0 for No">-->
                             </div>
                         </div>
                         <br>
@@ -78,7 +86,11 @@
                                 <label for="heart_disease">heart_disease </label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="heart_disease" name="heart_disease" placeholder="1 for Yes, 0 for No">
+                                <select name="heart_disease" id="heart_disease" class="form-control" >
+                                  <option value="1">Yes</option>
+                                  <option value="0">No</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="heart_disease" name="heart_disease" placeholder="1 for Yes, 0 for No">-->
                             </div>
                         </div>
                         <br>
@@ -87,7 +99,11 @@
                                 <label for="ever_married">ever_married</label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="ever_married" name="ever_married" placeholder="1 for Yes, 0 for No">
+                                <select name="ever_married" id="ever_married" class="form-control" >
+                                  <option value="1">Yes</option>
+                                  <option value="0">No</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="ever_married" name="ever_married" placeholder="1 for Yes, 0 for No">-->
 
                                 </select>
                             </div>
@@ -98,7 +114,14 @@
                                 <label for="work_type">work_type </label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="work_type" name="work_type" placeholder="0 for Govn Job, 1 for Never_worked, 2 for Private, 3 for Self-employed, 4 for children">
+                                <select name="work_type" id="work_type" class="form-control" >
+                                    <option value="0">Govt Job</option>
+                                    <option value="1">Never_worked</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Self-employed</option>
+                                    <option value="4">children</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="work_type" name="work_type" placeholder="0 for Govn Job, 1 for Never_worked, 2 for Private, 3 for Self-employed, 4 for children">-->
 
                                 </select>
                             </div>
@@ -109,7 +132,11 @@
                                 <label for="Residence_type">Residence_type</label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="Residence_type" name="Residence_type" placeholder="for Urban 1, for Rural 0">
+                                <select name="Residence_type" id="Residence_type" class="form-control" >
+                                    <option value="0">Rural</option>
+                                    <option value="1">Urban</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="Residence_type" name="Residence_type" placeholder="for Urban 1, for Rural 0">-->
                             </div>
                         </div>
                         <br>
@@ -139,7 +166,13 @@
                                 <label for="smoking_status">smoking_status</label>
                             </div>
                             <div class="col-lg-8 col-md-8">
-                                <input type="text" class="form-control" id="smoking_status" name="smoking_status" placeholder="0 for Unknown, 1 for formerly smoked, 2 for never smoked, 3 for smokes">
+                                <select name="smoking_status" id="smoking_status" class="form-control" >
+                                    <option value="0">Unknown</option>
+                                    <option value="1">formerly smoked</option>
+                                    <option value="2">never smoked</option>
+                                    <option value="3">smokes</option>
+                                </select>
+                                <!--<input type="text" class="form-control" id="smoking_status" name="smoking_status" placeholder="0 for Unknown, 1 for formerly smoked, 2 for never smoked, 3 for smokes">-->
                             </div>
                         </div>
                         <br>
@@ -149,6 +182,7 @@
                         <center>
                             <button type="submit" class="btn btn-dark" value="submit">Submit</button>
                         </center>
+                    </div>
                 </form>
             </div>
         </div>
