@@ -7,6 +7,11 @@ import joblib
 import os
 import  numpy as np
 import pickle
+import flask
+import pandas as pd
+import tensorflow as tf
+import keras
+from keras.models import load_model
 
 
 app= Flask(__name__)
@@ -92,6 +97,17 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+# to use it when loading the model 
+def auc(y_true, y_pred):
+    auc = tf.metrics.auc(y_true, y_pred)[1]
+    keras.backend.get_session().run(tf.local_variables_initializer())
+    return auc
+
+# load the model, and pass in the custom metric function
+# global graph
+# graph = tf.get_default_graph()
+model = load_model('/home/aadit/project/Stroke-Risk-Prediction-using-Machine-Learning-master/ANN.hd5')
+
 @app.route("/result",methods=['POST','GET'])
 def result():
     gender=int(request.form['gender'])
@@ -105,34 +121,47 @@ def result():
     bmi = float(request.form['bmi'])
     smoking_status = int(request.form['smoking_status'])
 
-    x=np.array([gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,
-                avg_glucose_level,bmi,smoking_status]).reshape(1,-1)
+    # x=np.array([gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,
+    #             avg_glucose_level,bmi,smoking_status]).reshape(1,-1)
+    
+    x=np.array([age,hypertension,heart_disease,avg_glucose_level,bmi,gender,ever_married,work_type,Residence_type,
+                smoking_status]).reshape(1,-1)
+    
+    # x=pd.DataFrame.from_dict(params, orient='index').transpose()
+    # with graph.as_default():
+    data = {"success": False}
+    data["prediction"]=p = str(model.predict(x))
+    # np.round_(p[0]*100, decimals = 2)
+    print(p)
+    data["success"] = True
+    print(data)
+    return flask.jsonify(data)
 
-    scaler_path=os.path.join('/home/aadit/project/Stroke-Risk-Prediction-using-Machine-Learning-master','models/scaler.pkl')
-    scaler=None
-    with open(scaler_path,'rb') as scaler_file:
-        scaler=pickle.load(scaler_file)
+    # scaler_path=os.path.join('/home/aadit/project/Stroke-Risk-Prediction-using-Machine-Learning-master','models/scaler.pkl')
+    # scaler=None
+    # with open(scaler_path,'rb') as scaler_file:
+    #     scaler=pickle.load(scaler_file)
 
-    x=scaler.transform(x)
+    # x=scaler.transform(x)
 
-    model_path=os.path.join('/home/aadit/project/Stroke-Risk-Prediction-using-Machine-Learning-master','models/dt.sav')
-    dt=joblib.load(model_path)
+    # model_path=os.path.join('/home/aadit/project/Stroke-Risk-Prediction-using-Machine-Learning-master','models/dt.sav')
+    # dt=joblib.load(model_path)
 
-    Y_pred=dt.predict(x)
+    # Y_pred=dt.predict(x)
 
     #inserting in prediction history
-    username=session['username']
-    username=str(username)
-    pred=str(Y_pred[0])
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('insert into preds values(% s,% s)', (username,pred))
-    mysql.connection.commit()
+    # username=session['username']
+    # username=str(username)
+    # pred=str(Y_pred[0])
+    # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # cursor.execute('insert into preds values(% s,% s)', (username,pred))
+    # mysql.connection.commit()
 
-    # for No Stroke Risk
-    if Y_pred==0:
-        return render_template('nostroke.html')
-    else:
-        return render_template('stroke.html')
+    # #for No Stroke Risk
+    # if Y_pred==0:
+    #     return render_template('nostroke.html')
+    # else:
+    #     return render_template('stroke.html')
 
 if __name__=="__main__":
     app.run(debug=True,port=7384)
